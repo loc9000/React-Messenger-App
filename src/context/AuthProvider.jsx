@@ -1,5 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react"
 import { getAuth, GoogleAuthProvider, signInWithPopup, setPersistence, browserLocalPersistence, onAuthStateChanged } from 'firebase/auth'
+import { doc, setDoc } from "firebase/firestore";
+import { db } from "../firebase/firebaseConfig";
 
 export const AuthContext = createContext();
 
@@ -28,6 +30,11 @@ export const AuthProvider = ({children}) => {
     useEffect(() => {
         onAuthStateChanged( auth, user => {
             if ( user ) {
+
+                const userRef = doc( db, 'users', user.uid )
+
+                setDoc ( userRef, {email: user.email, name: user.displayName }, { merge: true } )
+
                 setCurrentUser({
                     id: user.uid,
                     name: user.displayName,
