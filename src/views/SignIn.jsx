@@ -1,6 +1,11 @@
 import React from 'react'
+import { useAuth } from '../context/AuthProvider'
 
-export const SignIn = () => {
+export const SignIn = () => 
+{
+
+    const { signIn } = useAuth()
+    
     return (
         <div className="row">
             <div className="col-md-6">
@@ -23,7 +28,16 @@ export const SignIn = () => {
                             </label>
                         </div>
                     </div>
-                    <input className="btn btn-primary" type="submit" value="Log In" />
+                    <div className="form-group">
+                        <input className="btn btn-primary" type="submit" value="Log In" />
+                    </div>
+                    <div className="form-group">
+                        <input 
+                            onClick={ signIn }
+                            className="btn btn-success" 
+                            type="button" 
+                            value="Sign in with Google" />
+                    </div>
                 </form>
             </div>
             <div className="col-md-6">
